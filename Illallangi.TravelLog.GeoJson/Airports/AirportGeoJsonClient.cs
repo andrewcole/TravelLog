@@ -3,13 +3,15 @@ using System.Data;
 using System.Linq;
 using GeoJSON.Net.Feature;
 using GeoJSON.Net.Geometry;
+using Newtonsoft.Json;
 
 namespace Illallangi.TravelLog.Airports
 {
     public sealed class AirportGeoJsonClient : 
         GeoJsonClientBase, 
         ICreateClient<IAirport>, 
-        IRetrieveClient<IAirport>
+        IRetrieveClient<IAirport>,
+        IExportClient<IAirport>
     {
         public IAirport Create(IAirport airport)
         {
@@ -39,11 +41,12 @@ namespace Illallangi.TravelLog.Airports
             return Retrieve().SingleOrDefault(a => a.Iata.Equals(airport.Iata));
         }
 
-        public IQueryable<IAirport> Retrieve()
-        {
-            return FeatureCollection.Features.Where(f => f.IsAirport())
-                .Select(f => f.AsAirport())
-                .AsQueryable();
-        }
+        public IQueryable<IAirport> Retrieve() => new FeatureCollection(FeatureCollection.Features.Where(f => f.IsAirport()).ToList())
+            .Features
+            .Select(f => f.AsAirport())
+            .AsQueryable();
+
+        public string Export(bool compress = true) => new FeatureCollection(FeatureCollection.Features.Where(f => f.IsAirport()).ToList())
+            .AsJson(compress);
     }
 }

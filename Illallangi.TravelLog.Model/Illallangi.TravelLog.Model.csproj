@@ -43,6 +43,9 @@
   <ItemGroup>
     <Compile Include="IBase.cs" />
     <Compile Include="ICreateClient.cs" />
+    <Compile Include="GreatCircles\IGreatCircle.cs" />
+    <Compile Include="GreatCircles\GreatCircle.cs" />
+    <Compile Include="IExportClient.cs" />
     <Compile Include="Routes\Route.cs" />
     <Compile Include="Routes\IRoute.cs" />
     <Compile Include="Airports\Airport.cs" />

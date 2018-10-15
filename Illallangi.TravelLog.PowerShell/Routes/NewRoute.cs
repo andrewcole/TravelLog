@@ -4,7 +4,7 @@ using System.Management.Automation;
 namespace Illallangi.TravelLog.Routes
 {
     [Cmdlet(VerbsCommon.New, @"Route")]
-    public sealed class NewRoute : NinjectCmdlet<TravelLogNinjectModule>, IRoute
+    public sealed class NewRoute : NinjectCmdlet<GeoJsonModule>, IRoute
     {
         protected override void ProcessRecord()
         {

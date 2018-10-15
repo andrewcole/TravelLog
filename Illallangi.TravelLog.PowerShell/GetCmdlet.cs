@@ -1,6 +1,6 @@
 ﻿namespace Illallangi.TravelLog
 {
-    public abstract class GetCmdlet<T> : NinjectCmdlet<TravelLogNinjectModule>
+    public abstract class GetCmdlet<T> : NinjectCmdlet<GeoJsonModule>
     {
         protected override void EndProcessing()
         {

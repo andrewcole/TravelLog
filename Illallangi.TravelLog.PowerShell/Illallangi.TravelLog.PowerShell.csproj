@@ -47,14 +47,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Airports\ExportAirport.cs" />
     <Compile Include="Airports\NewAirport.cs" />
+    <Compile Include="ExportCmdlet.cs" />
+    <Compile Include="GreatCircles\ExportGreatCircle.cs" />
     <Compile Include="NinjectCmdlet.cs" />
+    <Compile Include="GreatCircles\GetGreatCircles.cs" />
+    <Compile Include="Routes\ExportRoute.cs" />
     <Compile Include="Routes\GetRoute.cs" />
     <Compile Include="Airports\GetAirport.cs" />
     <Compile Include="GetCmdlet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Routes\NewAirport.cs" />
-    <Compile Include="TravelLogNinjectModule.cs" />
+    <Compile Include="Routes\NewRoute.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Illallangi.TravelLog.GeoJson\Illallangi.TravelLog.GeoJson.csproj">
@@ -67,6 +71,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Illallangi.TravelLog.psm1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Illallangi.TravelLog.psd1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

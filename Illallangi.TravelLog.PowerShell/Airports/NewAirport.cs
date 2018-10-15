@@ -4,7 +4,7 @@ using System.Management.Automation;
 namespace Illallangi.TravelLog.Airports
 {
     [Cmdlet(VerbsCommon.New, @"Airport")]
-    public sealed class NewAirport : NinjectCmdlet<TravelLogNinjectModule>, IAirport
+    public sealed class NewAirport : NinjectCmdlet<GeoJsonModule>, IAirport
     {
         protected override void ProcessRecord()
         {

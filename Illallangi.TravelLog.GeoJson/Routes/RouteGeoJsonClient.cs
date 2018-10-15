@@ -7,10 +7,11 @@ using Illallangi.TravelLog.Airports;
 
 namespace Illallangi.TravelLog.Routes
 {
-    public sealed class RouteGeoJsonClient : 
-        GeoJsonClientBase, 
+    public sealed class RouteGeoJsonClient :
+        GeoJsonClientBase,
         ICreateClient<IRoute>,
-        IRetrieveClient<IRoute>
+        IRetrieveClient<IRoute>,
+        IExportClient<IRoute>
     {
         private IRetrieveClient<IAirport> _airportRetrieveClient;
 
@@ -32,7 +33,8 @@ namespace Illallangi.TravelLog.Routes
                 throw new DuplicateNameException($@"Airport {airport.Origin} Does Not Exists");
             }
 
-            var destination = _airportRetrieveClient.Retrieve().SingleOrDefault(a => a.Iata.Equals(airport.Destination));
+            var destination = _airportRetrieveClient.Retrieve()
+                .SingleOrDefault(a => a.Iata.Equals(airport.Destination));
             if (destination == null)
             {
                 throw new DuplicateNameException($@"Airport {airport.Destination} Does Not Exists");
@@ -55,14 +57,16 @@ namespace Illallangi.TravelLog.Routes
 
             SaveFeatureCollection(FeatureCollection);
 
-            return Retrieve().SingleOrDefault(a => a.Origin.Equals(airport.Origin) && a.Destination.Equals(airport.Destination));
+            return Retrieve().SingleOrDefault(a =>
+                a.Origin.Equals(airport.Origin) && a.Destination.Equals(airport.Destination));
         }
+        
+        public IQueryable<IRoute> Retrieve() => new FeatureCollection(FeatureCollection.Features.Where(f => f.IsRoute()).ToList())
+            .Features
+            .Select(f => f.AsRoute())
+            .AsQueryable();
 
-        public IQueryable<IRoute> Retrieve()
-        {
-            return FeatureCollection.Features.Where(f => f.IsRoute())
-                .Select(f => f.AsRoute())
-                .AsQueryable();
-        }
+        public string Export(bool compress = true) => new FeatureCollection(FeatureCollection.Features.Where(f => f.IsRoute()).ToList())
+            .AsJson(compress);
     }
 }
